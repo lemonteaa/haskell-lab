@@ -8,7 +8,7 @@ type Reserve = [Currency]
 
 changeOne :: Rational -> Currency -> (Rational, Integer)
 changeOne amount Currency{..} =
-    let changeCount = min count $ toInteger . floor $ amount/unit
+    let changeCount = min count (toInteger . floor $ amount/unit)
         remainder = amount - toRational changeCount * unit
     in (remainder, changeCount)
 
