@@ -17,8 +17,8 @@ changeAllGreedy amount reserve =
     let (finalRemainder, changes) = foldl' changeOneDetail (amount, []) reserve
         reserveAfterChange = zipWith deduct reserve (reverse changes)
     in (finalRemainder, changes, reserveAfterChange)
-    where changeOneDetail (remainder, changes) c@Currency{ unit = cunit } =
+    where changeOneDetail (remainder, changes) c =
               let (newRemainder, changeCount) = changeOne remainder c
-              in (newRemainder, Currency{ unit = cunit, count = changeCount} : changes)
+              in (newRemainder, c { count = changeCount } : changes)
           deduct Currency{unit=cunit, count=original} Currency{count=used} =
               Currency{unit=cunit, count=(original - used)}
